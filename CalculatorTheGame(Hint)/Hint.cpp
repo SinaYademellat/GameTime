@@ -35,6 +35,10 @@ bool checkleaf(string t)
 		case '*':
 			FirstStap*=(C2-'0');
 			break;
+
+		//<<
+		case '<':
+			FirstStap/=10;
 		default:
 			break;
 		}	
@@ -43,15 +47,73 @@ bool checkleaf(string t)
 	return FirstStap==GOAL;
 }
 int spaceSize=0;
+
+bool checkleaf_V(vector<string> t)
+{
+	int FirstStap=MAINFirstStap;
+	for (int i=0;i<t.size();i++)
+	{
+		char C1=t[i][0]; // type
+		string C2=t[i]; C2[0]='0'; // number :)
+		int c2=stoi(C2);
+		// cout<<"\nC2: "<<c2<<" "<<c2+1<<endl;
+		int tmpNumber=1;
+		for (int i = 1; i < C2.length(); i++)
+		{
+			tmpNumber*=10;
+		}
+		
+		switch (C1)
+		{
+		case '`': // `a ==> cur[a] :)
+			
+			FirstStap*=tmpNumber;
+			FirstStap+=c2;
+			break;
+		
+		case '+':
+			FirstStap+=c2;
+			break;
+		
+		case '-':
+			FirstStap-=c2;
+			break;
+				
+		case '/':
+			FirstStap/=c2;
+			break;
+
+		case '*':
+			FirstStap*=c2;
+			break;
+
+		//<<
+		case '<':
+			FirstStap/=10;
+		default:
+			break;
+		}	
+	} 
+	// cout<<FirstStap<<"\n";
+	return FirstStap==GOAL;
+}
+
+
+vector<string>tmp_out_;
 string tmp_out_2="";
 vector<string>foo;
 void BT(int l)
 {
 	if(l==MOVES)
 	{
-		if(checkleaf(tmp_out_2))
+		if(checkleaf_V(tmp_out_))
 		{
-			cout<<"# "<<NUMBER_out++<<") "<<tmp_out_2<<endl;
+			cout<<"# "<<NUMBER_out++<<") ";
+			for(string u: tmp_out_)
+			{
+				cout<<u<<" , ";
+			}
+			cout<<endl;
 		}
 	}		
 	else
@@ -59,10 +121,9 @@ void BT(int l)
 		for(int i=0;i<spaceSize;i++)
 		{	
 			//p
-			tmp_out_2+=foo[i];
+			tmp_out_.push_back(foo[i]);
 			BT(l+1);
-			tmp_out_2.pop_back();
-			tmp_out_2.pop_back();
+			tmp_out_.pop_back();
 		}
 	}
 
@@ -81,5 +142,6 @@ int main()
 		foo.push_back(tmpp);
 	}
 	spaceSize=tadad;
+	cout<<endl;
 	BT(0);
 }
