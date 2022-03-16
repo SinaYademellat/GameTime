@@ -1,54 +1,9 @@
 #include <bits\stdc++.h>
 //Calculator : The Game (Hint)
 using namespace std;
-int MOVES=5;//MAXL
-int GOAL=210;
-int NUMBER_out=1;
-int MAINFirstStap=0;
-bool checkleaf(string t)
-{
-	int FirstStap=MAINFirstStap;
-	for (int i=0;i<t.length();i+=2)
-	{
-		char C1=t[i];
-		char C2=t[i+1];
-
-		switch (C1)
-		{
-		case '`':
-			FirstStap*=10;
-			FirstStap+=(C2-'0');
-			break;
-		
-		case '+':
-			FirstStap+=(C2-'0');
-			break;
-		
-		case '-':
-			FirstStap-=(C2-'0');
-			break;
-				
-		case '/':
-			FirstStap/=(C2-'0');
-			break;
-		
-		case '*':
-			FirstStap*=(C2-'0');
-			break;
-
-		//<<
-		case '<':
-			FirstStap/=10;
-		default:
-			break;
-		}	
-	} 
-	//cout<<FirstStap<<"\n";
-	return FirstStap==GOAL;
-}
-int spaceSize=0;
-
-bool checkleaf_V(vector<string> t)
+	//MAXL
+int MOVES=5,GOAL=210,NUMBER_out=1, MAINFirstStap=0,spaceSize=0;
+bool checkleaf(vector<string> t)
 {
 	int FirstStap=MAINFirstStap;
 	for (int i=0;i<t.size();i++)
@@ -62,7 +17,48 @@ bool checkleaf_V(vector<string> t)
 		{
 			tmpNumber*=10;
 		}
-		
+
+
+		if(C1 == '$')
+		{
+			string tmpL="",tmpR="",tmpFirst="";	
+			bool Flag_ =true;
+			for (int s = 1; s < t[i].length(); s++)
+			{
+				if( t[i][s] == '=')
+				{
+					s+=2;
+					Flag_=false;
+					//continue;
+				}
+
+				if(Flag_)
+				{
+					tmpL+=t[i][s];
+				}
+				else
+				{
+					tmpR+=t[i][s];
+				}
+				
+				/* code */
+			}
+			
+			tmpFirst=to_string(FirstStap);
+
+			for (int  j = 0; j < tmpFirst.length(); j++)
+			{
+				if(tmpFirst[j]==tmpL[0])
+				{
+					tmpFirst[j]=tmpR[0];
+				}
+			}
+			//cout<<"\nL: "<<tmpL<<" R:"<<tmpR<<endl;
+			//cout<<"--> "<<tmpFirst<<"\n";
+			FirstStap = stoi(tmpFirst);
+			continue;
+		}
+
 		switch (C1)
 		{
 		case '`': // `a ==> cur[a] :)
@@ -78,7 +74,7 @@ bool checkleaf_V(vector<string> t)
 		case '-':
 			FirstStap-=c2;
 			break;
-				
+		
 		case '/':
 			FirstStap/=c2;
 			break;
@@ -94,19 +90,29 @@ bool checkleaf_V(vector<string> t)
 			break;
 		}	
 	} 
-	// cout<<FirstStap<<"\n";
+	//cout<<FirstStap<<"\n";
 	return FirstStap==GOAL;
 }
+vector<string>tmp_out_,foo;
 
+void ALL_(vector<string> a)
+{
+	cout<<endl;
+	for (string U : a)
+	{
+		cout<<U<<" , ";
+	}
+	cout<<endl;
+}
 
-vector<string>tmp_out_;
-string tmp_out_2="";
-vector<string>foo;
 void BT(int l)
 {
 	if(l==MOVES)
 	{
-		if(checkleaf_V(tmp_out_))
+		//ALL_(tmp_out_);
+		//return;
+
+		if(checkleaf(tmp_out_))
 		{
 			cout<<"# "<<NUMBER_out++<<") ";
 			for(string u: tmp_out_)
@@ -114,6 +120,7 @@ void BT(int l)
 				cout<<u<<" , ";
 			}
 			cout<<endl;
+			return;
 		}
 	}		
 	else
@@ -122,11 +129,12 @@ void BT(int l)
 		{	
 			//p
 			tmp_out_.push_back(foo[i]);
+			//b
 			BT(l+1);
+			//p
 			tmp_out_.pop_back();
 		}
 	}
-
 }
 int main()
 {
