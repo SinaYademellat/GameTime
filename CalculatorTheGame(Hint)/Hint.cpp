@@ -3,6 +3,25 @@
 using namespace std;
 	//MAXL
 int MOVES=5,GOAL=210,NUMBER_out=1, MAINFirstStap=0,spaceSize=0;
+
+
+inline void PatternMatching(string &A,string B,string C)
+{
+    int lenC=C.length();
+    int lenB=B.length();
+    int pos = 0;
+    int index;
+    while((index = A.find(B, pos)) != string::npos) 
+    {
+        //cout<<index<<" "<<lenB<<endl;
+        A.erase(index,lenB);
+        //cout<<"E : "<<A<<endl;
+        A.insert(index,C);
+        //cout<<"I : "<<A<<endl;  
+        pos+=(lenC-1);
+    }
+}
+
 bool checkleaf(vector<string> t)
 {
 	int FirstStap=MAINFirstStap;
@@ -46,13 +65,11 @@ bool checkleaf(vector<string> t)
 			
 			tmpFirst=to_string(FirstStap);
 
-			for (int  j = 0; j < tmpFirst.length(); j++)
-			{
-				if(tmpFirst[j]==tmpL[0])
-				{
-					tmpFirst[j]=tmpR[0];
-				}
-			}
+			// for (int  j = 0; j < tmpFirst.length(); j++){	if(tmpFirst[j]==tmpL[0]){	tmpFirst[j]=tmpR[0];}}
+
+			// PatternMatching 
+			PatternMatching(tmpFirst,tmpL,tmpR);
+
 			//cout<<"\nL: "<<tmpL<<" R:"<<tmpR<<endl;
 			//cout<<"--> "<<tmpFirst<<"\n";
 			FirstStap = stoi(tmpFirst);
