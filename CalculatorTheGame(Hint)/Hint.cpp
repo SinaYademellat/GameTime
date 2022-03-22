@@ -4,6 +4,16 @@ using namespace std;
 	//MAXL
 int MOVES=5,GOAL=210,NUMBER_out=1, MAINFirstStap=0,spaceSize=0;
 
+void ALL_(vector<string> a)
+{
+	cout<<endl;
+	for (string U : a)
+	{
+		cout<<U<<" , ";
+	}
+	cout<<endl;
+}
+
 
 inline void PatternMatching(string &A,string B,string C)
 {
@@ -81,7 +91,15 @@ bool checkleaf(vector<string> t)
 		case '`': // `a ==> cur[a] :)
 			
 			FirstStap*=tmpNumber;
-			FirstStap+=c2;
+			if(FirstStap>=0)
+			{
+				FirstStap+=c2;
+			}
+			else
+			{
+				FirstStap-=c2;
+			}
+			
 			break;
 		
 		case '+':
@@ -103,24 +121,22 @@ bool checkleaf(vector<string> t)
 		//<<
 		case '<':
 			FirstStap/=10;
+			break;
+		//x^2
+		case '^':
+			FirstStap=pow(FirstStap,c2);
+			break;
+		
 		default:
 			break;
 		}	
 	} 
+	
+	//ALL_(t);
 	//cout<<FirstStap<<"\n";
 	return FirstStap==GOAL;
 }
 vector<string>tmp_out_,foo;
-
-void ALL_(vector<string> a)
-{
-	cout<<endl;
-	for (string U : a)
-	{
-		cout<<U<<" , ";
-	}
-	cout<<endl;
-}
 
 void BT(int l)
 {
@@ -153,6 +169,7 @@ void BT(int l)
 		}
 	}
 }
+
 int main()
 {
 	ios::sync_with_stdio(false); cin.tie(0);
