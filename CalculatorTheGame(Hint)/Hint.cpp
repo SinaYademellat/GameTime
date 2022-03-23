@@ -127,13 +127,18 @@ bool checkleaf(vector<string> t)
 			FirstStap=pow(FirstStap,c2);
 			break;
 		
+		//+/- ==> @0
+		case '@':
+			FirstStap*=(-1);
+			break;
+
 		default:
 			break;
 		}	
 	} 
 	
-	//ALL_(t);
-	//cout<<FirstStap<<"\n";
+	// ALL_(t);
+	// cout<<FirstStap<<"\n";
 	return FirstStap==GOAL;
 }
 vector<string>tmp_out_,foo;
