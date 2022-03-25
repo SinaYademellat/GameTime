@@ -34,13 +34,43 @@ inline void PatternMatching(string &A,string B,string C)
 
 bool checkleaf(vector<string> t)
 {
-	int FirstStap=MAINFirstStap;
+	// fast :)
+	//if(t[0]=="/3" || t[0]=="/8"){return false;}
+	
+	long double FirstStap=MAINFirstStap;
 	for (int i=0;i<t.size();i++)
 	{
 		char C1=t[i][0]; // type
 		string C2=t[i]; C2[0]='0'; // number :)
-		int c2=stoi(C2);
-		// cout<<"\nC2: "<<c2<<" "<<c2+1<<endl;
+		int c2 =0;
+		// // for *-3 :: (level 49)
+		if( C2.length()>=3 )
+		{
+			if( C2[1]=='+')
+			{
+				C2[1]='0';
+				c2 =stoi(C2);
+			}
+			else if ( C2[1]=='-')
+			{
+				// cout<<"\t Hi \t";
+				C2[1]='0';
+				c2 =stoi(C2);
+				c2=c2*(-1);
+			}
+			else
+			{
+				c2 =stoi(C2);
+			}
+			
+		}
+		else
+		{
+			c2 =stoi(C2);
+		}
+		
+		
+		// cout<<"\nC2: "<<c2<<" "<<c2+1<<" STR: "<<C2<<endl;
 		int tmpNumber=1;
 		for (int i = 1; i < C2.length(); i++)
 		{
@@ -136,9 +166,10 @@ bool checkleaf(vector<string> t)
 			break;
 		}	
 	} 
-	
+	// // DEBUG :)
 	// ALL_(t);
 	// cout<<FirstStap<<"\n";
+	
 	return FirstStap==GOAL;
 }
 vector<string>tmp_out_,foo;
