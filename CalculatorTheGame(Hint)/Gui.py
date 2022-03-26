@@ -1,5 +1,6 @@
 # !/usr/bin/python3
 from tkinter import *
+import os
 
 root = Tk()
 frame = Frame(root)
@@ -24,19 +25,16 @@ MOVES_Label.pack()
 MOVES_Entry = Entry(frame,bg='cyan')
 MOVES_Entry.pack()
 ########################
-NUMBER_Label=Label(frame,text = "number",font=('Times',20))
+NUMBER_Label=Label(frame,text = "numbers",font=('Times',20))
 NUMBER_Label.pack()
-NUMBER_Entry = Entry(frame,bg='cyan')
+NUMBER_Entry = Entry(frame,bg='cyan',font=('Times',20))
 NUMBER_Entry.pack()
-
 ############################################
+
 def FOOO():
-    print(point_Entry.get())
-    print(goal_Entry.get())
-    print(MOVES_Entry.get())
-    print(NUMBER_Entry.get())
-
-
-Button(frame,  text='Show',command=FOOO ).pack()#, command=show_entry_fields)
-
+    print("~~~~~~~~~~~~~~~~~~~~~~~")
+    os.system("a.exe {p} {g} {M} {N}".format(p=point_Entry.get(),g=goal_Entry.get(),M=MOVES_Entry.get(),N=NUMBER_Entry.get()))
+    print("~~~~~~~~~~~~~~~~~~~~~~~")
+   
+Button(frame,text='Show',bg='red',width=30,bd=3,command=FOOO ).pack()
 root.mainloop()

@@ -206,20 +206,21 @@ void BT(int l)
 	}
 }
 
-int main()
+int main(int argc, char const *argv[])
 {
 	ios::sync_with_stdio(false); cin.tie(0);
-	cout<<"cur_point: ";cin>>MAINFirstStap;
-	cout<<"GOAL: ";cin>>GOAL;
-	cout<<"MOVES: ";cin>>MOVES;
-	int tadad=0;cout<<"NUMBER: ";cin>>tadad;	
-	for (int i =1 ;i<=tadad;i++)
+	cout<<"HI\n";
+	if(argc<4){cout<<"\n... :( \n";return -1;}
+	MAINFirstStap=stoi(argv[1]);
+	GOAL = stoi(argv[2]);
+	MOVES = stoi(argv[3]);
+	for (int i = 4; i < argc; i++)
 	{
-		string tmpp="";
-		cin>>tmpp;
-		foo.push_back(tmpp);
+		foo.push_back(argv[i]);
 	}
-	spaceSize=tadad;
-	cout<<endl;
+	spaceSize=argc-4;
+	cout<<"\nTadad: "<<spaceSize<<endl;
 	BT(0);
+	cout<<"by";
+	return 0;
 }
