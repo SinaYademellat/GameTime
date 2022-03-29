@@ -174,6 +174,9 @@ bool checkleaf(vector<string> t)
 }
 vector<string>tmp_out_,foo;
 
+// GUI.py :(
+ofstream MyFile("sinaYad.txt");
+
 void BT(int l)
 {
 	if(l==MOVES)
@@ -184,11 +187,20 @@ void BT(int l)
 		if(checkleaf(tmp_out_))
 		{
 			cout<<"# "<<NUMBER_out++<<") ";
+			
+			//Gui.py
+				MyFile<<"# "<<NUMBER_out-1<<") ";
 			for(string u: tmp_out_)
 			{
 				cout<<u<<" , ";
+				
+				//Gui.py
+				MyFile<<u<<" , ";
 			}
 			cout<<endl;
+
+			//Gui.py
+				MyFile<<endl;
 			return;
 		}
 	}		
@@ -209,7 +221,7 @@ void BT(int l)
 int main(int argc, char const *argv[])
 {
 	ios::sync_with_stdio(false); cin.tie(0);
-	cout<<"HI\n";
+	cout<<"HI .cpp\n";
 	if(argc<4){cout<<"\n... :( \n";return -1;}
 	MAINFirstStap=stoi(argv[1]);
 	GOAL = stoi(argv[2]);
@@ -221,6 +233,9 @@ int main(int argc, char const *argv[])
 	spaceSize=argc-4;
 	cout<<"\nTadad: "<<spaceSize<<endl;
 	BT(0);
-	cout<<"by";
+	cout<<"by .cpp\n";
+
+	MyFile.close();
+
 	return 0;
 }
