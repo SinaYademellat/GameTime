@@ -37,6 +37,8 @@ bool checkleaf(vector<string> t)
 	// fast :)
 	//if(t[0]=="/3" || t[0]=="/8"){return false;}
 	
+	string tmpstrforRevers="";
+
 	long double FirstStap=MAINFirstStap;
 	for (int i=0;i<t.size();i++)
 	{
@@ -77,7 +79,7 @@ bool checkleaf(vector<string> t)
 			tmpNumber*=10;
 		}
 
-
+		//?????????
 		if(C1 == '$')
 		{
 			string tmpL="",tmpR="",tmpFirst="";	
@@ -162,10 +164,22 @@ bool checkleaf(vector<string> t)
 			FirstStap*=(-1);
 			break;
 
+		
+		//r0 ==> reverse
+		case 'r':
+			//cout<<"\nFirstStap: "<<FirstStap<<endl;
+			tmpstrforRevers=to_string(int(FirstStap));
+			reverse(tmpstrforRevers.begin(),tmpstrforRevers.end());
+			//cout<<"\n##>> "<<tmpstrforRevers<<endl;
+			FirstStap = stoi(tmpstrforRevers);
+			//cout<<"\nFirstStap: "<<FirstStap<<endl;
+			break;
+
 		default:
 			break;
 		}	
 	} 
+
 	// // DEBUG :)
 	// ALL_(t);
 	// cout<<FirstStap<<"\n";
