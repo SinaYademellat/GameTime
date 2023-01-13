@@ -1,6 +1,7 @@
 # !/usr/bin/python3
 from tkinter import *
 import os
+from tkinter import ttk
 
 root = Tk()
 
@@ -66,9 +67,47 @@ def FOOO():
     with open('sinaYad.txt') as f:
         lines = f.readlines()
     
+    ## work whit Label -->  fa 'tadad ziyad bash bad mishod' 
+    # for line in lines:
+    #     NUMBER_Label=Label(newWindow,text = line, bg = BackgroundColorHEX_ ,font=('Times',20))
+    #     NUMBER_Label.pack() 
+
+    ## fa "kar ba jadval manand"
+
+    columns = ('first_name')
+
+
+
+    tree = ttk.Treeview(newWindow,columns=columns, show='headings')
+    
+    tree.column("# 1",anchor=CENTER, stretch=NO, width=200)
+    tree.heading("# 1", text=":)")
+
+    # tree.insert('', END, values=('sina'))
+    
     for line in lines:
-        NUMBER_Label=Label(newWindow,text = line, bg = BackgroundColorHEX_ ,font=('Times',20))
-        NUMBER_Label.pack() 
+        foooostr=""
+        for j in line:
+            if(j==' '):
+                continue
+            foooostr+=j
+
+        # print('foooostr-> ',foooostr)
+        tree.insert('', END, values=(foooostr),tags=('ttk'))
+        #    print(str(line))
+    
+    # tag configuration
+    tree.tag_configure("ttk",font=('10') )
+
+    tree.grid(row=0, column=0, sticky='nsew')
+
+
+   
+
+
+
+    # Button(newWindow,text='Exit',bg='red',width=30,bd=3 ).pack()
+
 
    
 Button(frame,text='Show',bg='red',width=30,bd=3,command=FOOO ).pack()
