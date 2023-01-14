@@ -32,20 +32,44 @@ if __name__ == '__main__':
             K_s: (0, spead_of_hero)    # << s for Move down >>
         }
 
+    ################
+    bullet_sample = pygame.image.load('img/bullet_1.png')
+    number_of_shot_you_have = 5
+    ###################
 
+
+    # Load img 
     #! Main Loop 
     
     runing = True
     
     while runing:
        
+        window.blit(bg_img,(0,0))
+        
         dar_ba_dar_rec =  pygame.Rect( dar_ba_dar_rec_x , dar_ba_dar_rec_y , 50 , 50)  # << our_hero >>
-   
+
+  
+        ###################
+        for i in range(number_of_shot_you_have):
+            window.blit(bullet_sample,(15*(i),0))
+
+        ###################
+
         for event in pygame.event.get():
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ << Exit >>
             if( (event.type == QUIT)  or (event.type == KEYDOWN and event.key == K_ESCAPE  ) ):
                 runing = False
-        
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ << KEYDOWN >>
+            if(event.type == KEYDOWN ) :
+                             # ============== << Fier >>
+                if ( event.key == K_SPACE ):
+                    if(number_of_shot_you_have > 0):
+                        number_of_shot_you_have -= 1
+                    else:
+                        print("tir Nadari dadash :)")
+
+
         '''
         # !~~~~~~~~~~~~!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ << ^__^ BUG ^__^ >> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ << Move Hero >>
@@ -69,7 +93,7 @@ if __name__ == '__main__':
                 dar_ba_dar_rec_x +=xx
                 dar_ba_dar_rec_y +=yy
                
-        window.blit(bg_img,(0,0))
+        
         pygame.draw.rect(window ,color_of_dar_ba_dar_rec_RGB ,dar_ba_dar_rec )   # Drawing 
         pygame.display.update()
 
