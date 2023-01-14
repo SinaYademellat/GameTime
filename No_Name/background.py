@@ -26,23 +26,39 @@ if __name__ == '__main__':
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ << Move >>>  
     spead_of_hero = 0.3
     Move_List_and_spead = {
+            
+            ###################### adws 
+
             K_a: (-spead_of_hero, 0),  # << a for Move Left >> 
             K_d: (spead_of_hero, 0),   # << d for Move Right >>
             K_w: (0, -spead_of_hero),  # << w for Move up >>
-            K_s: (0, spead_of_hero)    # << s for Move down >>
+            K_s: (0, spead_of_hero),  # << s for Move down >>
+
+            ###################### 4key :)
+
+            K_LEFT: (-spead_of_hero, 0),  # << a for Move Left >> 
+            K_RIGHT: (spead_of_hero, 0),   # << d for Move Right >>
+            K_UP: (0, -spead_of_hero),  # << w for Move up >>
+            K_DOWN: (0, spead_of_hero)    # << s for Move down >>
+
         }
+
+
+      # Load img 
 
     ################
     bullet_sample = pygame.image.load('img/bullet_1.png')
     number_of_shot_you_have = 5
     ###################
+    ################
+    bullet_r3 = pygame.image.load('img/bullet_r3.png')
+    ###################
 
-
-    # Load img 
     #! Main Loop 
     
     runing = True
-    
+    bool_shut_ = False
+    shut_move_int = 50  
     while runing:
        
         window.blit(bg_img,(0,0))
@@ -64,8 +80,11 @@ if __name__ == '__main__':
             if(event.type == KEYDOWN ) :
                              # ============== << Fier >>
                 if ( event.key == K_SPACE ):
+                    
                     if(number_of_shot_you_have > 0):
                         number_of_shot_you_have -= 1
+                        bool_shut_ = True
+                        shut_move_int = dar_ba_dar_rec_x + 50 
                     else:
                         print("tir Nadari dadash :)")
 
@@ -93,8 +112,25 @@ if __name__ == '__main__':
                 dar_ba_dar_rec_x +=xx
                 dar_ba_dar_rec_y +=yy
                
-        
+
+        # ! *******************************<< Drawing >> *******************************<<
+
         pygame.draw.rect(window ,color_of_dar_ba_dar_rec_RGB ,dar_ba_dar_rec )   # Drawing 
+
+        # ---------------------- > نمایش شلیک گلوله 
+        if(bool_shut_): 
+
+            if(shut_move_int < 990):
+                # Fier_ = pygame.Rect( shut_move_int ,dar_ba_dar_rec_y + 10 , 30 , 30)
+                # pygame.draw.rect(window ,(255,255, 255) ,Fier_ )
+
+                shut_move_int += 2 # << spead >>  :)
+                window.blit(bullet_r3,(shut_move_int,dar_ba_dar_rec_y))
+
+            else:
+                bool_shut_ = False
+
+
         pygame.display.update()
 
 
