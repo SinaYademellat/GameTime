@@ -44,15 +44,16 @@ if __name__ == '__main__':
         }
 
 
-      # Load img 
+    ################ << Load img  >>
 
-    ################
     bullet_sample = pygame.image.load('img/bullet_1.png')
     number_of_shot_you_have = 5
-    ###################
-    ################
+        
     bullet_r3 = pygame.image.load('img/bullet_r3.png')
-    ###################
+    
+    R_key_png = pygame.image.load('img/R_key.png')
+    bool_R_key_show_ = False
+    #####################
 
     #! Main Loop 
     
@@ -69,8 +70,13 @@ if __name__ == '__main__':
         ###################
         for i in range(number_of_shot_you_have):
             window.blit(bullet_sample,(15*(i),0))
+        ###################
 
         ###################
+        if(bool_R_key_show_):
+            window.blit(R_key_png,(0,0))
+        ###################
+
 
         for event in pygame.event.get():
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ << Exit >>
@@ -86,7 +92,16 @@ if __name__ == '__main__':
                         bool_shut_ = True
                         shut_move_int = dar_ba_dar_rec_x + 50 
                     else:
-                        print("tir Nadari dadash :)")
+                        #? why ca`t use it: 
+                            # window.blit(R_key_png,(0,0))
+                        # print("tir Nadari dadash :)")
+                        bool_R_key_show_ = True
+
+                # ============== << Reload time >>
+                if ( event.key == K_r ):
+                    number_of_shot_you_have = 5
+                    bool_R_key_show_ = False
+
 
 
         '''
@@ -105,6 +120,7 @@ if __name__ == '__main__':
         #! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         '''
         
+        ###################### Move it 
         keys =  pygame.key.get_pressed() 
         for i in Move_List_and_spead:
             if(keys[i]):
