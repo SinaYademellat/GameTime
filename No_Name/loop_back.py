@@ -65,7 +65,7 @@ if __name__ == '__main__':
     runing = True
     bool_shut_ = False
     shut_move_int = 50
-
+    shut_move_y =  0
     # ------------------------------------------------
     # ------------ << Global constants >> ------------
     # ------------------------------------------------
@@ -133,6 +133,7 @@ if __name__ == '__main__':
                         number_of_shot_you_have -= 1
                         bool_shut_ = True
                         shut_move_int = dar_ba_dar_rec_x + 50 
+                        shut_move_y =  dar_ba_dar_rec_y
                     else:
                         bool_R_key_show_ = True
 
@@ -177,7 +178,7 @@ if __name__ == '__main__':
         if(bool_shut_): 
             if(shut_move_int < 990):
                 shut_move_int += 2 # << spead >>  :)
-                window.blit(bullet_r3,(shut_move_int,dar_ba_dar_rec_y))
+                window.blit(bullet_r3,(shut_move_int,shut_move_y))
             else:
                 bool_shut_ = False
 
