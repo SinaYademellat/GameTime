@@ -1,50 +1,56 @@
 import pygame
 from pygame.locals import *
+import math
 
 if __name__ == '__main__':
 
     pygame.init()
     pygame.display.set_caption(' ^____^ ')          # Name of pygame windo :)
-    window = pygame.display.set_mode((1000,500))    #  width = 1000     height = 500
 
-    # Adding a background image
-    bg_img = pygame.image.load('img/bg.png')
-    bg_img = pygame.transform.scale(bg_img,(1000,500))
+    clock = pygame.time.Clock()
 
-    '''
-         #~~~~~~~~~~~~ <<  dar_ba_dar_rec :  our_hero >>
+    # ------------------------------------------------
+    # ------------ << Global constants >> ------------
+    # ------------------------------------------------
 
-                    Rect(left, top, width, height)
-                    Rect(pos, size)
-                    Rect(obj)
-      pygame.draw.rect(window ,color_of_dar_ba_dar_rec_RGB ,dar_ba_dar_rec )
-    '''
-    
-    dar_ba_dar_rec_x , dar_ba_dar_rec_y = ( 10 ,430 )
-    color_of_dar_ba_dar_rec_RGB =   (255,0,0)
+    FrameHeight = 500
+    FrameWidth = 1000
+    window = pygame.display.set_mode((FrameWidth,FrameHeight))    #  width = 1000     height = 500
+    # DEFINING MAIN VARIABLES IN SCROLLING
+    scroll = 0
+
+
    
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ << Move >>>  
-    spead_of_hero = 0.3
+
+        #* Dar_ba_Dar ==  << HERO >>
+    dar_ba_dar_rec_x = 10 
+    dar_ba_dar_rec_y = 430 
+    color_of_dar_ba_dar_rec_RGB =   (255,0,0)
+
+   
+        #* %%%%%%%%%%%%%%%%%%% << Move >>> %%%%%%%%%%%%%%%%%%% 
+    spead_of_hero = 3
+
     Move_List_and_spead = {
-            
-            ###################### adws 
+                            ####### a-d-w-s 
 
             K_a: (-spead_of_hero, 0),  # << a for Move Left >> 
             K_d: (spead_of_hero, 0),   # << d for Move Right >>
             K_w: (0, -spead_of_hero),  # << w for Move up >>
             K_s: (0, spead_of_hero),  # << s for Move down >>
+                            
+                            ####### 4key :)
+            K_LEFT: (-spead_of_hero, 0),
+            K_RIGHT: (spead_of_hero, 0),
+            K_UP: (0, -spead_of_hero),
+            K_DOWN: (0, spead_of_hero)
+            }
 
-            ###################### 4key :)
+            #! ################## << Load img >> ################## 
 
-            K_LEFT: (-spead_of_hero, 0),  # << a for Move Left >> 
-            K_RIGHT: (spead_of_hero, 0),   # << d for Move Right >>
-            K_UP: (0, -spead_of_hero),  # << w for Move up >>
-            K_DOWN: (0, spead_of_hero)    # << s for Move down >>
-
-        }
-
-
-    ################ << Load img  >>
+                    # <<  Background >> 
+    bg_img = pygame.image.load('img/bg.png')
+    bg_img = pygame.transform.scale(bg_img,(1000,500))
 
     bullet_sample = pygame.image.load('img/bullet_1.png')
     number_of_shot_you_have = 5
@@ -53,29 +59,65 @@ if __name__ == '__main__':
     
     R_key_png = pygame.image.load('img/R_key.png')
     bool_R_key_show_ = False
-    #####################
 
-    #! Main Loop 
-    
+            #? ################## << Load img >> ################## 
+
     runing = True
     bool_shut_ = False
-    shut_move_int = 50  
+    shut_move_int = 50
+
+    # ------------------------------------------------
+    # ------------ << Global constants >> ------------
+    # ------------------------------------------------
+
+
+
+    # CHANGE THE BELOW 1 TO UPPER NUMBER IF
+    # YOU GET BUFFERING OF THE IMAGE
+    # HERE 1 IS THE CONSTATNT FOR REMOVING BUFFERING
+    tiles = math.ceil(FrameWidth / bg_img.get_width()) + 1
+
+
+
+    #! Main Loop     
     while runing:
-       
-        window.blit(bg_img,(0,0))
+
+
+            #! << Endless Scrolling in pygame >>
+    #* ####################################### 
         
+        # THIS WILL MANAGE THE SPEED OF
+        # THE SCROLLING IN PYGAME
+        clock.tick(100)
+        
+        I = 0
+
+        while(I < tiles):
+            window.blit(bg_img, (bg_img.get_width()*I + scroll, 0))
+            I += 1
+        # FRAME FOR SCROLLING
+        scroll -= 6
+
+        # RESET THE SCROLL FRAME
+        if abs(scroll) > bg_img.get_width():
+            scroll = 0
+
+
+        #* ##############################################################################
+        
+        # window.blit(bg_img,(0,0))
+
         dar_ba_dar_rec =  pygame.Rect( dar_ba_dar_rec_x , dar_ba_dar_rec_y , 50 , 50)  # << our_hero >>
 
-  
-        ###################
+            ###################
         for i in range(number_of_shot_you_have):
             window.blit(bullet_sample,(15*(i),0))
-        ###################
+            ###################
 
-        ###################
+            ###################
         if(bool_R_key_show_):
             window.blit(R_key_png,(0,0))
-        ###################
+            ###################
 
 
         for event in pygame.event.get():
@@ -92,9 +134,6 @@ if __name__ == '__main__':
                         bool_shut_ = True
                         shut_move_int = dar_ba_dar_rec_x + 50 
                     else:
-                        #? why ca`t use it: 
-                            # window.blit(R_key_png,(0,0))
-                        # print("tir Nadari dadash :)")
                         bool_R_key_show_ = True
 
                 # ============== << Reload time >>
@@ -120,7 +159,8 @@ if __name__ == '__main__':
         #! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         '''
         
-        ###################### Move it 
+            ################### <<  Move it >> ###################
+ 
         keys =  pygame.key.get_pressed() 
         for i in Move_List_and_spead:
             if(keys[i]):
@@ -133,21 +173,15 @@ if __name__ == '__main__':
 
         pygame.draw.rect(window ,color_of_dar_ba_dar_rec_RGB ,dar_ba_dar_rec )   # Drawing 
 
-        # ---------------------- > نمایش شلیک گلوله 
+            #  -----> نمایش شلیک گلوله <----- 
         if(bool_shut_): 
-
             if(shut_move_int < 990):
-                # Fier_ = pygame.Rect( shut_move_int ,dar_ba_dar_rec_y + 10 , 30 , 30)
-                # pygame.draw.rect(window ,(255,255, 255) ,Fier_ )
-
                 shut_move_int += 2 # << spead >>  :)
                 window.blit(bullet_r3,(shut_move_int,dar_ba_dar_rec_y))
-
             else:
                 bool_shut_ = False
 
 
         pygame.display.update()
-
 
     pygame.quit()
